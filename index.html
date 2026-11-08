@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Unofficial guide to the Gunnison County, Colorado property assessment cycle: which year your tax bill pays for, how the years overlap, and the full assessor calendar.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Gunnison Assessor's Year</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: olive county masthead band, then two working sections — a "which year am I paying" explainer with a lane timeline, and a year calendar (12-month strip → month grid + agenda). */
+:root{
+  --bg:#f5f5ee; --surface:#ffffff; --sunk:#ecece2; --ink:#23241a; --muted:#5d5e4c; --line:#d8d8c6;
+  --olive:#414323; --olive-ink:#f3f3e6; --olive-soft:#e4e5cf; --orange:#b5652a; --orange-soft:#f6e3d3;
+  --c-real:#3d6a88; --c-pp:#76569a; --c-exempt:#2a7f71; --c-appeals:#a33a45; --c-reports:#62662f; --c-cert:#a87712; --c-billing:#55606c;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17180f; --surface:#212217; --sunk:#1b1c12; --ink:#ecedde; --muted:#a8a990; --line:#3a3b2b;
+  --olive:#2c2e17; --olive-ink:#eeeedd; --olive-soft:#33361b; --orange:#e08a4b; --orange-soft:#3b2716;
+  --c-real:#7fb0d1; --c-pp:#b597d8; --c-exempt:#6cc7b5; --c-appeals:#e27a83; --c-reports:#b9be72; --c-cert:#e2b34f; --c-billing:#a3afbb;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17180f; --surface:#212217; --sunk:#1b1c12; --ink:#ecedde; --muted:#a8a990; --line:#3a3b2b;
+  --olive:#2c2e17; --olive-ink:#eeeedd; --olive-soft:#33361b; --orange:#e08a4b; --orange-soft:#3b2716;
+  --c-real:#7fb0d1; --c-pp:#b597d8; --c-exempt:#6cc7b5; --c-appeals:#e27a83; --c-reports:#b9be72; --c-cert:#e2b34f; --c-billing:#a3afbb;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--olive)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+button{font:inherit;color:inherit}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+
+/* Masthead */
+.mast{background:var(--olive);color:var(--olive-ink)}
+.mast .wrap{padding-block:34px 30px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:end}
+.mast h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;font-stretch:88%;letter-spacing:-.01em;margin-top:6px}
+.mast p{max-width:60ch;margin:12px 0 0;opacity:.88}
+.next{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);padding:14px 16px}
+.next h2{font-size:13px;font-family:var(--f-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.next ol{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.next li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:baseline}
+.next .when{font-family:var(--f-mono);font-size:13px;opacity:.9}
+.next .days{display:block;font-size:12px;opacity:.7}
+.next button{all:unset;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:3px}
+.next button:hover{text-decoration-color:currentColor}
+.next button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+
+section{padding-block:40px 8px}
+.sec-head{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:end;justify-content:space-between;margin-bottom:18px}
+.sec-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:750;font-stretch:92%}
+.sec-head p{margin:6px 0 0;color:var(--muted);max-width:64ch}
+
+/* Segmented controls & chips */
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--sunk);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--olive);color:var(--olive-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px 5px 9px;cursor:pointer;font-size:13px;font-weight:500}
+.chip .sw{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.chip[aria-pressed="false"]{opacity:.45}
+.chip[aria-pressed="false"] .sw{background:transparent;outline:1.5px solid var(--c);outline-offset:-1.5px}
+.chip .n{color:var(--muted);font-family:var(--f-mono);font-size:12px}
+
+/* Explainer */
+.payer{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;font-size:18px;font-weight:600}
+.payer .seg button{font-size:17px;padding:8px 18px}
+.answer{font-family:var(--f-display);font-size:clamp(26px,3.6vw,42px);font-weight:700;font-stretch:92%;line-height:1.2;margin:22px 0 26px;max-width:28ch;text-wrap:balance}
+.answer b{font-weight:800;padding:0 .12em;border-radius:6px}
+.answer .y-pay{color:var(--c-appeals)}
+.answer .y-tax{color:var(--c-cert)}
+.answer .y-price{color:var(--orange)}
+.answer .y-count{color:var(--c-exempt)}
+.journey{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:stretch;list-style:none;margin:0;padding:0;counter-reset:j}
+.journey li{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 10px}
+.journey li:not(:last-child)::after{content:"";position:absolute;top:34px;left:calc(50% + 38px);right:calc(-50% + 38px);height:3px;background:var(--line);border-radius:2px}
+.journey li:not(:last-child)::before{content:"";position:absolute;top:29px;right:calc(-50% + 34px);border:6.5px solid transparent;border-left:9px solid var(--line);border-right:0;z-index:1}
+.journey .ic{width:70px;height:70px;border-radius:50%;background:var(--jc);display:grid;place-items:center;flex:none}
+.journey .ic svg{width:36px;height:36px}
+.journey .lab{margin-top:12px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--jc)}
+.journey .dt{font-family:var(--f-display);font-size:clamp(19px,2vw,25px);font-weight:800;font-stretch:88%;line-height:1.15;margin-top:2px}
+.journey .ln{margin-top:6px;color:var(--muted);font-size:14.5px;max-width:20ch}
+.journey.anim li{animation:jin .45s ease both;animation-delay:calc(var(--n) * 90ms)}
+@keyframes jin{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:none}}
+.span-note{margin:22px 0 0;text-align:center;color:var(--muted);font-size:15px}
+.span-note b{color:var(--ink)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:28px}
+.facts div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:14.5px}
+.facts b{display:block;font-family:var(--f-display);font-size:18px;font-stretch:92%;margin-bottom:2px}
+.more-h{padding:16px 16px 6px;font-size:22px;font-weight:750;font-stretch:92%}
+.more .inner{padding:0 16px 16px}
+.more .inner > p{margin:0 0 10px;color:var(--muted)}
+div.more{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.more{margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.more summary{cursor:pointer;padding:14px 16px;font-weight:700;font-size:16px;list-style:none;display:flex;align-items:center;gap:10px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"›";display:inline-block;transition:transform .15s;font-size:20px;color:var(--muted)}
+details.more[open] summary::before{transform:rotate(90deg)}
+details.more summary:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;border-radius:12px}
+details.more .inner{padding:0 16px 16px}
+details.more .inner > p{margin:0 0 10px;color:var(--muted)}
+.tl-scroll{overflow-x:auto}
+.tl-scroll svg{display:block;min-width:900px;width:100%;height:auto}
+#ov text{font-family:var(--f-body)}
+#ov .row.click{cursor:pointer}
+@media (max-width:760px){
+  .journey{grid-template-columns:minmax(0,1fr);gap:18px}
+  .journey li{flex-direction:row;text-align:left;align-items:center;gap:14px;padding:0}
+  .journey li::after,.journey li::before{display:none}
+  .journey .ic{width:54px;height:54px}
+  .journey .ic svg{width:28px;height:28px}
+  .journey .lab{margin-top:0}
+  .journey .ln{max-width:none}
+  .facts{grid-template-columns:minmax(0,1fr)}
+}
+
+/* Calendar */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-bottom:12px}
+.toolbar .lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:6px}
+.strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0;text-align:left;cursor:pointer;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.mcard .mh{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--olive-soft);font-family:var(--f-display);font-weight:750;letter-spacing:.06em;font-size:13px;text-transform:uppercase}
+.mcard .mh .c{font-family:var(--f-mono);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0}
+.mcard[aria-pressed="true"]{border-color:var(--olive);box-shadow:0 0 0 1px var(--olive)}
+.mcard[aria-pressed="true"] .mh{background:var(--olive);color:var(--olive-ink)}
+.mcard[aria-pressed="true"] .mh .c{color:var(--olive-ink);opacity:.75}
+.mcard ul{list-style:none;margin:0;padding:7px 9px 9px;display:grid;gap:4px;font-size:12px;line-height:1.3}
+.mcard li{display:grid;grid-template-columns:8px 22px minmax(0,1fr);gap:5px;align-items:baseline}
+.mcard li i{width:8px;height:8px;border-radius:2px;background:var(--c);align-self:center}
+.mcard li .d{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.mcard li.dl span:last-child{color:var(--orange);font-weight:600}
+.mcard .more{color:var(--muted);font-size:11.5px;padding-left:35px}
+.mcard .none{color:var(--muted);font-style:italic}
+.mcard.now .mh::after{content:"today";font:600 10px var(--f-body);letter-spacing:.08em;background:var(--orange);color:#fff;border-radius:999px;padding:1px 7px;margin-left:auto;margin-right:8px}
+
+.month{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px;margin-top:16px;align-items:start}
+.mgrid{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.mgrid-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mgrid-h h3{font-size:26px;font-weight:800;font-stretch:88%}
+.mgrid-h .nav{display:flex;gap:6px}
+.mgrid-h .nav button{border:1px solid var(--line);background:var(--surface);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:16px}
+.dow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.dow div{font-size:11px;text-align:center;color:var(--muted);font-weight:600;letter-spacing:.08em;padding-bottom:4px}
+.day{position:relative;min-height:58px;border-radius:7px;background:var(--sunk);padding:4px 5px;border:1px solid transparent;cursor:default;text-align:left;display:flex;flex-direction:column;gap:3px}
+.day.blank{background:transparent}
+.day.wknd{background:transparent;border-color:var(--sunk)}
+.day .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.day.has{cursor:pointer}
+.day.has .n{color:var(--ink);font-weight:600}
+.day.dl{background:var(--orange-soft);border-color:var(--orange)}
+.day.today{box-shadow:inset 0 0 0 2px var(--ink)}
+.day.sel{border-color:var(--ink)}
+.day .dots{display:flex;flex-wrap:wrap;gap:3px}
+.day .dots i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.day .bars{position:absolute;left:0;right:0;bottom:3px;display:grid;gap:2px}
+.day .bars i{height:3px;background:var(--c);opacity:.75}
+.day .bars i.s{margin-left:5px;border-radius:2px 0 0 2px}
+.day .bars i.e{margin-right:5px;border-radius:0 2px 2px 0}
+.legend-mini{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend-mini span{display:inline-flex;align-items:center;gap:6px}
+.legend-mini .sq{width:12px;height:12px;border-radius:3px;background:var(--orange-soft);border:1px solid var(--orange)}
+.legend-mini .bar{width:16px;height:3px;background:var(--muted)}
+
+.agenda{display:grid;gap:8px;min-width:0}
+.ev{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);overflow:hidden}
+.ev > button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:78px minmax(0,1fr) auto;gap:12px;align-items:start;width:100%;padding:11px 14px;cursor:pointer}
+.ev > button:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+.ev .when{font-family:var(--f-mono);font-size:13px;font-weight:600;line-height:1.35}
+.ev .when small{display:block;font-weight:500;color:var(--muted);font-size:11.5px}
+.ev .t{font-weight:600;line-height:1.35}
+.ev .meta{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:4px;font-size:12px;color:var(--muted)}
+.ev .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:1px 6px;background:var(--orange);color:#fff}
+.ev .tag.approx{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
+.ev .chev{color:var(--muted);transition:transform .15s;font-size:13px;margin-top:2px}
+.ev.open .chev{transform:rotate(90deg)}
+.ev .body{padding:0 14px 14px 104px;font-size:14px}
+.ev .body p{margin:0 0 8px}
+.ev .body .kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 12px;font-size:13px;color:var(--muted);margin-top:8px}
+.ev .body .kv b{color:var(--ink);font-weight:600}
+.ev .body .shift{background:var(--sunk);border-radius:6px;padding:6px 10px;font-size:13px;margin-top:8px}
+.ev.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--orange)}100%{box-shadow:0 0 0 0 transparent}}
+.empty{color:var(--muted);font-style:italic;padding:14px;border:1px dashed var(--line);border-radius:var(--r)}
+
+.yr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
+.yr .callout h3{font-size:15px}
+footer{margin-top:40px;border-top:3px solid var(--olive);padding-block:18px 40px;font-size:13px;color:var(--muted)}
+footer p{margin:4px 0;max-width:90ch}
+footer a{color:inherit}
+
+@media (max-width:980px){
+  .strip{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .month{grid-template-columns:minmax(0,1fr)}
+  .chain{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mast .wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .chain,.note-row,.yr{grid-template-columns:minmax(0,1fr)}
+  .ev > button{grid-template-columns:64px minmax(0,1fr) auto;gap:10px}
+  .ev .body{padding-left:14px}
+  .day{min-height:46px;padding:3px}
+  .day .dots i{width:6px;height:6px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Gunnison County, Colorado · Unofficial guide</div>
+      <h1>The Assessor's Year</h1>
+    </div>
+    <div class="next" aria-live="polite">
+      <h2>Coming up</h2>
+      <ol id="nextList"></ol>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="explain">
+  <div class="payer">
+    <span>I pay my bill in</span>
+    <div class="seg" id="billSeg" role="group" aria-label="Year you pay the bill"></div>
+  </div>
+  <p class="answer" id="answer" aria-live="polite"></p>
+  <ol class="journey" id="journey"></ol>
+  <p class="span-note" id="spanNote"></p>
+  <div class="facts" id="facts"></div>
+
+  <div class="more">
+    <h3 class="more-h">How the years overlap</h3>
+    <div class="inner">
+      <p>Each row is one tax year. Your bill is highlighted. Click another row to switch.</p>
+      <div class="tl-scroll"><svg id="ov" viewBox="0 0 1200 400" role="img" aria-label="Overlapping tax years"></svg></div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="sec-head">
+    <div>
+      <h2>The full assessor calendar</h2>
+      <p>Every statutory deadline, report, hearing window and hand-off we could pin down. Orange marks a deadline that belongs to the property owner. Click a month, then any item for the details.</p>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div><span class="lbl">Year</span><div class="seg" id="yearSeg" role="group" aria-label="Calendar year"></div></div>
+    <div><span class="lbl">Show</span><div class="seg" id="audSeg" role="group" aria-label="Audience">
+      <button type="button" data-aud="all" aria-pressed="true">Everything the office does</button>
+      <button type="button" data-aud="pub" aria-pressed="false">Property-owner dates</button>
+    </div></div>
+  </div>
+  <div class="chips" id="catChips" role="group" aria-label="Categories"></div>
+  <div class="strip" id="strip"></div>
+  <div class="month">
+    <div class="mgrid">
+      <div class="mgrid-h">
+        <h3 id="mTitle"></h3>
+        <div class="nav"><button type="button" id="prevM" aria-label="Previous month">‹</button><button type="button" id="nextM" aria-label="Next month">›</button></div>
+      </div>
+      <div class="dow"><div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div></div>
+      <div class="days" id="days"></div>
+      <div class="legend-mini"><span><i class="sq"></i>Owner deadline</span><span><i class="bar"></i>Window (runs across days)</span><span>Dot = one-day item</span></div>
+    </div>
+    <div class="agenda" id="agenda" aria-live="polite"></div>
+  </div>
+
+  <div class="yr" style="margin-top:22px">
+    <div class="callout"><h3>Year-round: abatements</h3><p>An owner who thinks they were overtaxed for a past year (an error, illegal or erroneous valuation, or clerical mistake) can petition for abatement or refund within two years after taxes were due. Petitions go to the Assessor, then the Commissioners.</p></div>
+    <div class="callout"><h3>Year-round: exemption changes</h3><p>A senior or veteran exemption stays in place until ownership or occupancy changes. Owners must report a change within 60 days. One exemption per home per year.</p></div>
+    <div class="callout"><h3>Weekend and holiday rule</h3><p>When a deadline falls on a Saturday, Sunday or legal holiday, the filing is timely on the next business day. The dates here are already shifted; open an item to see the statutory date.</p></div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Sources.</strong> 2026 dates: Division of Property Taxation 2026 Assessors' Year Calendar. 2027 dates: Gunnison County Assessor 2027 timeline handouts (alternate protest procedure, SB26-046 deadlines). Statute references are to the Colorado Revised Statutes, Title 39 unless noted. Items tagged <em>approximate</em> are typical office timing, not statutory deadlines.</p>
+  <p><strong>Not an official Gunnison County product.</strong> This is an independent, personal project for learning the assessment calendar. It is not produced or endorsed by Gunnison County or the Gunnison County Assessor's Office. Dates can change; for official deadlines, check with the Assessor's Office or gunnisoncounty.org.</p>
+</footer>
+</main>
+
+<script>
+(function(){
+"use strict";
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const CATS={
+  real:{name:"Real property values",v:"--c-real"},
+  pp:{name:"Personal property & natural resources",v:"--c-pp"},
+  exempt:{name:"Senior & veteran exemptions",v:"--c-exempt"},
+  appeals:{name:"Protests, CBOE & appeals",v:"--c-appeals"},
+  reports:{name:"State reports & audit",v:"--c-reports"},
+  cert:{name:"Certifications, budgets & levies",v:"--c-cert"},
+  billing:{name:"Tax bills & payments",v:"--c-billing"}
+};
+const D=s=>{const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)};
+const fmt=(d,o)=>d.toLocaleDateString("en-US",o||{month:"short",day:"numeric"});
+const dow=d=>d.toLocaleDateString("en-US",{weekday:"short"});
+const sameDay=(a,b)=>a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();
+const cvar=c=>`var(${CATS[c].v})`;
+
+/* ---------- Events. dates[year] = ["YYYY-MM-DD"] or [start,end]. stat[year] = statutory date before weekend shift. ---------- */
+const EV=[
+ {id:"assess",cat:"real",pub:1,title:"Assessment date",who:"All property in Colorado",
+  dates:{2026:["2026-01-01"],2027:["2027-01-01"]},cite:"39-1-105",
+  desc:"Property is valued as it physically exists on January 1. A house half-built on January 1 is valued half-built for the whole year. Seniors' eligibility for the exemption and business owners' personal property listings are also measured on this date."},
+ {id:"warrant",cat:"billing",title:"Tax warrant delivered to the Treasurer",who:"Assessor → Treasurer",
+  dates:{2026:["2026-01-12"],2027:["2027-01-11"]},stat:{2026:"Jan 10",2027:"Jan 10"},cite:"39-5-129",
+  desc:"The Assessor hands the Treasurer the tax roll for the prior tax year, with each account's assessed value and levies. This is the hand-off that lets bills go out. The 2027 warrant is for 2026 taxes."},
+ {id:"srdata",cat:"exempt",title:"Senior and veteran exemption data to the Property Tax Administrator",who:"Assessor → Division of Property Taxation",
+  dates:{2026:["2026-01-12"],2027:["2027-01-11"]},stat:{2026:"Jan 10",2027:"Jan 10"},
+  desc:"Exemption data from the certified tax roll goes to the state, which reimburses local governments for the tax exempted by the senior and disabled veteran exemptions."},
+ {id:"bills",cat:"billing",pub:1,approx:1,title:"Treasurer mails tax bills",who:"County Treasurer",
+  dates:{2026:["2026-01-12","2026-01-31"],2027:["2027-01-11","2027-01-31"]},
+  desc:"Bills go out after the warrant is delivered. Bills mailed in 2027 are for tax year 2026, based on the 2025 reappraisal value. Exact mailing date is set by the Treasurer."},
+ {id:"ppmail",cat:"pp",approx:1,title:"Personal property declaration schedules mailed",who:"Assessor → business owners",
+  dates:{2026:["2026-01-05","2026-01-30"],2027:["2027-01-04","2027-01-29"]},
+  desc:"Declaration schedules go to businesses so they can list furniture, equipment and other taxable business assets they owned on January 1. Timing is typical office practice."},
+ {id:"ppreimb",cat:"reports",title:"Personal property exemption reimbursement reports",who:"Treasurer and Assessor → Property Tax Administrator",
+  dates:{2026:["2026-03-02"],2027:["2027-03-01"]},stat:{2026:"Mar 1"},
+  desc:"The Treasurer reports property tax lost to the 2021 increase in the business personal property exemption, and the Assessor reports the lost-revenue reimbursement for each local government using the state's reimbursement spreadsheet."},
+ {id:"half1",cat:"billing",pub:1,dl:1,title:"First half of property taxes due",who:"Property owners",
+  dates:{2026:["2026-03-02"],2027:["2027-03-01"]},stat:{2026:"Feb 28",2027:"Feb 28"},cite:"39-10-104.5",
+  desc:"If you pay in two halves, the first half is due the last day of February. In 2027 this is the first half of your 2026 taxes."},
+ {id:"ppdecl",cat:"pp",pub:1,dl:1,title:"Business personal property declarations due",who:"Business owners",
+  dates:{2026:["2026-04-15"],2027:["2027-04-15"]},cite:"39-5-108",
+  desc:"Businesses return their declaration schedules listing taxable personal property owned on January 1. Late filings add a penalty, and the Assessor can estimate value for a business that does not file."},
+ {id:"ognr",cat:"pp",title:"Oil and gas and producing mine declarations due",who:"Operators and mine owners",
+  dates:{2026:["2026-04-15"],2027:["2027-04-15"]},
+  desc:"Production-based declarations for oil and gas leaseholds and producing mines are due with personal property schedules. These values are based on the prior year's production."},
+ {id:"full",cat:"billing",pub:1,dl:1,title:"Full payment of property taxes due",who:"Property owners",
+  dates:{2026:["2026-04-30"],2027:["2027-04-30"]},cite:"39-10-104.5",
+  desc:"If you pay all at once, the full amount is due April 30. In 2027 this pays your 2026 taxes."},
+ {id:"altapprove",cat:"appeals",title:"Commissioners approve the alternate protest procedure",who:"Board of County Commissioners",
+  dates:{2026:["2026-05-01"],2027:["2027-05-01"]},cite:"39-5-122.7(1)",
+  desc:"Each year the Assessor asks, and the Commissioners approve on or before May 1, the alternate protest and appeal procedure. Gunnison County always uses it. It moves Notices of Determination to mid-August and runs County Board of Equalization hearings from September 1 to November 1."},
+ {id:"nov",cat:"real",pub:1,title:"Real property Notices of Valuation mailed",who:"Assessor → every real property owner",
+  dates:{2026:["2026-05-01"],2027:["2027-05-01"]},cite:"39-5-121",
+  note:{2027:"Reappraisal year: the notice shows the value for 2027 and 2028, reflecting the market on June 30, 2026.",2026:"Intervening year: the 2025 reappraisal value carries forward unless the property changed by January 1, 2026."},
+  desc:"The notice shows the property's actual value and how to protest it."},
+ {id:"protwin",cat:"appeals",pub:1,title:"Real property protest period",who:"Property owners → Assessor",
+  dates:{2026:["2026-05-04","2026-06-08"],2027:["2027-05-01","2027-06-01"]},cite:"39-5-122",
+  note:{2027:"First year under SB26-046: the window closes June 1.",2026:"Protests began the first working day after notices were mailed."},
+  desc:"Owners can protest their value by email, mail (postmark counts) or in person. Include the account number, the reason and your opinion of value."},
+ {id:"protdl",cat:"appeals",pub:1,dl:1,title:"Real property protest deadline",who:"Property owners",
+  dates:{2026:["2026-06-08"],2027:["2027-06-01"]},cite:"39-5-122",
+  desc:"Last day to file a real property protest with the Assessor."},
+ {id:"half2",cat:"billing",pub:1,dl:1,title:"Second half of property taxes due",who:"Property owners",
+  dates:{2026:["2026-06-15"],2027:["2027-06-15"]},cite:"39-10-104.5",
+  desc:"Second-half payment for owners paying in two halves."},
+ {id:"ppnov",cat:"pp",pub:1,title:"Personal property Notices of Valuation mailed",who:"Assessor → business owners",
+  dates:{2026:["2026-06-15"],2027:["2027-07-15"]},cite:"39-5-121",
+  desc:"Business personal property is valued every year, so these notices go out every year."},
+ {id:"ppprot",cat:"appeals",pub:1,title:"Personal property protest period",who:"Business owners → Assessor",
+  dates:{2026:["2026-06-15","2026-06-30"],2027:["2027-07-15","2027-08-02"]},stat:{2027:"Jul 31"},
+  desc:"Window to protest a personal property value after the notice is mailed."},
+ {id:"ppprotdl",cat:"appeals",pub:1,dl:1,title:"Personal property protest deadline",who:"Business owners",
+  dates:{2026:["2026-06-30"],2027:["2027-08-02"]},stat:{2027:"Jul 31"},
+  desc:"Last day to protest a personal property value with the Assessor."},
+ {id:"apprdate",cat:"real",pub:1,title:"Appraisal date for the next reappraisal",who:"Every property in Colorado",
+  dates:{2026:["2026-06-30"]},cite:"39-1-104(10.2)",
+  desc:"Values for 2027 and 2028 reflect the market on this date. The 24-month sales study period, July 2024 to June 2026, closes today. Appraisers adjust every sale for time so it reads as if it sold on June 30, 2026."},
+ {id:"srapp",cat:"exempt",pub:1,dl:1,title:"Senior and veteran exemption applications due",who:"Seniors, disabled veterans, surviving spouses",
+  dates:{2026:["2026-07-15"],2027:["2027-07-15"]},cite:"39-3-205",
+  desc:"Applications for the senior exemption, disabled veteran exemption and surviving-spouse exemptions. The state pays 50% of the property tax on the first $200,000 of actual value of a qualifying primary residence."},
+ {id:"cboeval",cat:"appeals",title:"Assessor reports total assessed value to the CBOE",who:"Assessor → County Board of Equalization",
+  dates:{2026:["2026-07-15"],2027:["2027-07-15"]},
+  desc:"The County Board of Equalization receives the county's total assessed value ahead of its hearing season."},
+ {id:"audit",cat:"reports",approx:1,title:"State property assessment audit fieldwork",who:"Legislative Council's contract auditor",
+  dates:{2026:["2026-06-01","2026-08-31"],2027:["2027-06-01","2027-08-31"]},cite:"39-1-104(16)",
+  desc:"Every year an auditor hired by the Legislative Council tests whether the Assessor followed state manuals and procedures. It has two parts: a procedural review (economic areas, sales qualification, time adjustments, inspections) and a statistical sales ratio study (median ratio and coefficient of dispersion by property class). Data requests and review timing are set by the auditor; this window is approximate."},
+ {id:"latesr",cat:"exempt",pub:1,dl:1,title:"Late exemption applications (with good cause)",who:"Seniors and veterans",
+  dates:{2026:["2026-08-17"],2027:["2027-08-16"]},stat:{2026:"Aug 15",2027:"Aug 15"},
+  desc:"The Assessor may accept late senior and veteran exemption applications through this date when the applicant shows good cause."},
+ {id:"nod",cat:"appeals",pub:1,title:"Notices of Determination mailed",who:"Assessor → owners who protested",
+  dates:{2026:["2026-08-17"],2027:["2027-08-16"]},stat:{2026:"Aug 15",2027:"Aug 15"},cite:"39-5-122.7",
+  desc:"Each protester gets a written decision on the protest, real and personal property alike. If you agree, you're done. If not, the next step is the County Board of Equalization."},
+ {id:"prelim",cat:"cert",pub:1,title:"Preliminary Certification of Value to every taxing entity",who:"Assessor → ~42 taxing entities, copy to Division of Local Government",
+  dates:{2026:["2026-08-25"],2027:["2027-08-25"]},cite:"39-5-128(1)",
+  desc:"Each school district, town, fire district, metro district and other taxing entity gets its total assessed value, new construction, annexations and other figures it needs to build its budget and test its revenue limits. The school-district certifications use the school assessment rate."},
+ {id:"sdqls",cat:"reports",title:"School District Qualified Local Share report",who:"Assessor → Property Tax Administrator",
+  dates:{2026:["2026-08-25"],2027:["2027-08-25"]},
+  desc:"Assessed value figures used in the school finance formula. The DPT calendar lists this with the August abstract deadline; confirm with DPT whether alternate-procedure counties file it on the same date."},
+ {id:"cboewin",cat:"appeals",pub:1,title:"County Board of Equalization hearings",who:"CBOE (County Commissioners)",
+  dates:{2026:["2026-09-01","2026-11-02"],2027:["2027-09-01","2027-11-01"]},stat:{2026:"Nov 1"},cite:"39-8-107",
+  desc:"The CBOE hears appeals of the Assessor's Notices of Determination for real and personal property. Decisions are mailed within five business days of each decision."},
+ {id:"srreport",cat:"exempt",title:"Approved senior and veteran exemption report to the Administrator",who:"Assessor → Property Tax Administrator",
+  dates:{2026:["2026-09-10"],2027:["2027-09-10"]},
+  desc:"Reports of approved senior and disabled veteran exemptions and qualified-senior residential classifications. The state uses these to budget the reimbursement."},
+ {id:"cboedl",cat:"appeals",pub:1,dl:1,title:"Deadline to appeal to the County Board of Equalization",who:"Property owners",
+  dates:{2026:["2026-09-15"],2027:["2027-09-15"]},cite:"39-8-106",
+  desc:"Owners who disagree with their Notice of Determination file a written appeal with the CBOE."},
+ {id:"auditrpt",cat:"reports",title:"Final audit report delivered",who:"Contract auditor → Assessor, Commissioners, PTA, State Board of Equalization",
+  dates:{2026:["2026-09-15"],2027:["2027-09-15"]},cite:"39-1-104(16)",
+  desc:"Final county reports from the annual property assessment study go to the Assessor, the Commissioners, the Property Tax Administrator, the State Board of Equalization and the Legislative Council. The SBOE uses the results to decide whether any county must reappraise a class of property."},
+ {id:"budget",cat:"cert",pub:1,title:"Proposed budgets submitted to taxing-entity boards",who:"Budget officers of every taxing entity",
+  dates:{2026:["2026-10-15"],2027:["2027-10-15"]},cite:"29-1-105 (local government budget law)",
+  desc:"Budget hearings follow through the fall. This is when residents can weigh in on tax rates, since the Assessor sets values, not levies."},
+ {id:"cboeend",cat:"appeals",pub:1,title:"CBOE hearings end; decisions completed",who:"County Board of Equalization",
+  dates:{2026:["2026-11-02"],2027:["2027-11-01"]},stat:{2026:"Nov 1"},
+  desc:"All CBOE decisions for the year are done. Value changes from the CBOE flow into the abstract and the December recertification."},
+ {id:"abstract",cat:"reports",title:"Abstract of Assessment filed with the Property Tax Administrator",who:"Assessor → Division of Property Taxation",
+  dates:{2026:["2026-11-23"],2027:["2027-11-22"]},stat:{2026:"Nov 21",2027:"Nov 21"},cite:"39-5-123",
+  desc:"The county's totals of actual and assessed value by property class and subclass. Counties using the alternate protest procedure file in November instead of August 25, because their CBOE hearings run until November 1."},
+ {id:"baadl",cat:"appeals",pub:1,dl:1,title:"Deadline to appeal CBOE decisions",who:"Property owners",
+  dates:{2027:["2027-12-01"]},cite:"39-8-108(1), as amended by SB26-046",
+  desc:"Choose one: the state Board of Assessment Appeals, Gunnison County District Court, or binding arbitration. If your Notice of Valuation was mailed off-schedule, the deadline is the later of December 1 or 30 days after the decision."},
+ {id:"recertrec",cat:"cert",title:"Recommended date to recertify values",who:"Assessor → taxing entities",
+  dates:{2026:["2026-12-01"],2027:["2027-12-01"]},
+  desc:"The Division recommends sending final certifications by December 1 so entities have time to set levies."},
+ {id:"recert",cat:"cert",pub:1,title:"Final recertification of values",who:"Assessor → every taxing entity",
+  dates:{2026:["2026-12-10"],2027:["2027-12-10"]},cite:"39-1-111(5)",
+  desc:"Final assessed values, with all protest and CBOE changes, go to each taxing entity. These are the values levies are applied to."},
+ {id:"levydue",cat:"cert",pub:1,title:"Taxing entities certify mill levies to the Commissioners",who:"Taxing entities → Board of County Commissioners",
+  dates:{2026:["2026-12-15"],2027:["2027-12-15"]},cite:"39-5-128 and 39-1-111(1)",
+  desc:"Each entity adopts its budget and mill levy and sends the levy certification to the Commissioners."},
+ {id:"levyset",cat:"cert",pub:1,title:"Commissioners levy taxes and certify levies to the Assessor",who:"Board of County Commissioners → Assessor",
+  dates:{2026:["2026-12-22"],2027:["2027-12-22"]},cite:"39-1-111(1)",
+  desc:"The levies come to the Assessor's office. The office applies them to every account to build the tax roll and warrant that goes to the Treasurer by January 10."}
+];
+EV.forEach(e=>{e.span={};for(const y in e.dates){const a=e.dates[y];e.span[y]=[D(a[0]),D(a[a.length-1])];}});
+
+const YEARS=[2026,2027];
+const today=new Date();today.setHours(0,0,0,0);
+
+/* ---------- Coming up ---------- */
+function renderNext(){
+  const items=[];
+  EV.forEach(e=>{for(const y in e.span){const [s]=e.span[y];if(s>=today&&!e.approx)items.push({e,y,s});}});
+  items.sort((a,b)=>a.s-b.s);
+  const ol=document.getElementById("nextList");ol.innerHTML="";
+  items.slice(0,4).forEach(({e,y,s})=>{
+    const days=Math.round((s-today)/864e5);
+    const li=document.createElement("li");
+    li.innerHTML=`<span class="when">${fmt(s)}<span class="days">${days===0?"today":days===1?"tomorrow":"in "+days+" days"}</span></span><button type="button">${e.title}</button>`;
+    li.querySelector("button").addEventListener("click",()=>{jumpTo(e.id,+y);});
+    ol.appendChild(li);
+  });
+  if(!items.length) ol.innerHTML="<li>No upcoming dates in this calendar.</li>";
+}
+
+/* ---------- Explainer ---------- */
+const BILL_YEARS=[2025,2026,2027,2028,2029,2030];
+let bill=2027;
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function cycle(B){const T=B-1, R=(T%2)?T:T-1;return {B,T,R,apprY:R-1,s24:R-3};}
+
+/* 24×24 line icons */
+const GLYPH={
+ sales:'<circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5 5"/>',
+ appr:'<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><circle cx="12" cy="13.5" r="3.2"/><path d="M8.5 7.5l1.5-2.5h4l1.5 2.5"/>',
+ cond:'<path d="M3.5 11.5L12 4.5l8.5 7"/><path d="M6.5 10v9.5h11V10"/><path d="M10.5 19.5v-5h3v5"/>',
+ levy:'<path d="M6 18L18 6"/><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/>',
+ pay:'<path d="M15.5 8.5c-.6-1.4-2-2-3.5-2-2 0-3.5 1-3.5 2.6 0 3.6 7.2 1.9 7.2 5.6 0 1.6-1.6 2.8-3.7 2.8-1.7 0-3.2-.8-3.8-2.2"/><path d="M12 4v16"/>'
+};
+function glyph(k,cx,cy,size,stroke){
+  const s=size/24;
+  return `<g transform="translate(${cx-size/2} ${cy-size/2}) scale(${s})" fill="none" stroke="${stroke}" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">${GLYPH[k]}</g>`;
+}
+
+function steps(c){
+  const second=c.T!==c.R;
+  return [
+   {k:"sales",col:"--c-pp",lab:"Home sales",dt:`${c.s24} – ${c.apprY}`,ln:"We study two years of sales.",
+    at:new Date(c.s24+1,6,1),band:[new Date(c.s24,6,1),new Date(c.apprY,5,30)]},
+   {k:"appr",col:"--orange",lab:"Price day",dt:`June 30, ${c.apprY}`,ln:"Your value is what it would sell for on this day.",at:new Date(c.apprY,5,30)},
+   {k:"cond",col:"--c-exempt",lab:"Count day",dt:`Jan 1, ${c.T}`,ln:second?`Same value as ${c.R}, unless something was built or torn down.`:"We count what's on your property this day.",at:new Date(c.T,0,1)},
+   {k:"levy",col:"--c-cert",lab:"Tax year",dt:String(c.T),ln:"Districts set tax rates in December.",at:new Date(c.T,9,15),band:[new Date(c.T,0,1),new Date(c.T,11,31)]},
+   {k:"pay",col:"--c-appeals",lab:"You pay",dt:`Jan – Jun ${c.B}`,ln:"Your bill comes in January.",at:new Date(c.B,2,15),band:[new Date(c.B,0,1),new Date(c.B,5,15)]}
+  ];
+}
+
+function renderBillSeg(){
+  const seg=document.getElementById("billSeg");seg.innerHTML="";
+  BILL_YEARS.forEach(y=>{
+    const b=document.createElement("button");b.type="button";b.textContent=y;b.setAttribute("aria-pressed",String(y===bill));
+    b.addEventListener("click",()=>setBill(y));seg.appendChild(b);
+  });
+}
+function setBill(y){if(!BILL_YEARS.includes(y))return;bill=y;renderBillSeg();renderExplainer();}
+
+function renderExplainer(){
+  const c=cycle(bill);
+  document.getElementById("answer").innerHTML=
+    `Your <b class="y-pay">${c.B}</b> bill pays for <b class="y-tax">${c.T}</b>. It's based on home prices on <b class="y-price">June&nbsp;30,&nbsp;${c.apprY}</b> and your property on <b class="y-count">January&nbsp;1,&nbsp;${c.T}</b>.`;
+  const j=document.getElementById("journey");
+  j.innerHTML=steps(c).map((s,i)=>`<li style="--jc:var(${s.col});--n:${i}"><span class="ic" aria-hidden="true"><svg viewBox="0 0 36 36">${glyph(s.k,18,18,34,"var(--surface)")}</svg></span><span><span class="lab">${s.lab}</span><span class="dt" style="display:block">${s.dt}</span><span class="ln" style="display:block">${s.ln}</span></span></li>`).join("");
+  if(!reduce){j.classList.remove("anim");void j.offsetWidth;j.classList.add("anim");}
+  document.getElementById("spanNote").innerHTML=`From price day to your last payment: <b>almost ${c.B-c.apprY} years</b>.`;
+  const Y=c.B;
+  document.getElementById("facts").innerHTML=
+   `<div><b>One value lasts two years, unless something changes</b>Homes get new values every odd year, like ${Y%2?Y:Y+1}. The value stays the same the next year unless the property changes, like new construction, an addition or a demolition.</div>`+
+   `<div><b>Why does the value letter come in May?</b>After the January 1 count day, the office spends January to April finishing values: checking what was built or torn down and running the sales numbers. State law sets May 1 as the mailing deadline. That leaves time for protests before values go to schools and districts in August for their budgets.</div>`+
+   `<div><b>Protest the value, not the rate</b>Disagree with your value? Tell the Assessor by early June. Tax rates come from schools, towns and districts.</div>`+
+   `<div><b>Always pay on time</b>Even if you protest. If your value goes down, you get money back.</div>`;
+  renderChart();
+}
+
+function renderChart(){
+  const c=cycle(bill);
+  const rows=[c.T-2,c.T-1,c.T,c.T+1,c.T+2];
+  const W=1200,L=118,Rm=16,top=44,rowH=34;
+  const first=cycle(rows[0]+1), y0=first.s24, y1=rows[rows.length-1]+2;
+  const t0=new Date(y0,0,1), t1=new Date(y1,0,1);
+  const x=d=>L+(W-L-Rm)*((d-t0)/(t1-t0));
+  const H=top+rows.length*rowH+8;
+  let s="";
+  for(let y=y0;y<y1;y++){
+    const a=x(new Date(y,0,1)), b=x(new Date(y+1,0,1)), sel=y===c.B;
+    s+=`<rect x="${a}" y="${top-26}" width="${b-a}" height="${H-top+26}" fill="${sel?"var(--orange-soft)":(y%2?"var(--sunk)":"transparent")}"/>`;
+    s+=`<text x="${(a+b)/2}" y="${top-10}" text-anchor="middle" style="font:${sel?800:600} 13px var(--f-mono);fill:${sel?"var(--orange)":"var(--muted)"}">${y}</text>`;
+  }
+  rows.forEach((T,i)=>{
+    const k=cycle(T+1), yy=top+i*rowH, on=T===c.T, ok=BILL_YEARS.includes(T+1);
+    const op=on?1:.38, mid=yy+rowH/2;
+    let g=`<rect x="0" y="${yy+2}" width="${W}" height="${rowH-4}" fill="transparent"/>`;
+    g+=`<text x="8" y="${mid+4}" style="font:${on?800:600} 13px var(--f-body);fill:var(--ink)">Tax year ${T}</text>`;
+    g+=`<rect x="${x(new Date(k.s24,6,1))}" y="${mid-5}" width="${x(new Date(k.apprY,5,30))-x(new Date(k.s24,6,1))}" height="10" rx="5" fill="var(--c-pp)" fill-opacity="${on?.85:.3}"/>`;
+    g+=`<path d="M${x(new Date(k.apprY,5,30))} ${mid-8} l8 8 l-8 8 l-8 -8 Z" fill="var(--orange)" opacity="${op}"/>`;
+    g+=`<rect x="${x(new Date(T,0,1))}" y="${mid-8}" width="${x(new Date(T,11,31))-x(new Date(T,0,1))}" height="16" rx="4" fill="var(--c-cert)" opacity="${op}"/>`;
+    g+=`<rect x="${x(new Date(T+1,0,1))}" y="${mid-8}" width="${x(new Date(T+1,5,15))-x(new Date(T+1,0,1))}" height="16" rx="4" fill="var(--c-appeals)" opacity="${op}"/>`;
+    s+=`<g class="row${ok&&!on?" click":""}" data-t="${T}">${g}</g>`;
+  });
+  const ly=H+16;
+  const leg=[["--c-pp","Sales looked at"],["--orange","Price day"],["--c-cert","Year being paid for"],["--c-appeals","Bill paid"]];
+  let lx=L;
+  leg.forEach(([v,t])=>{s+=`<rect x="${lx}" y="${ly-9}" width="14" height="10" rx="3" fill="var(${v})"/><text x="${lx+20}" y="${ly}" style="font:500 12px var(--f-body);fill:var(--muted)">${t}</text>`;lx+=t.length*7+48;});
+  const svg=document.getElementById("ov");svg.setAttribute("viewBox",`0 0 ${W} ${H+28}`);svg.innerHTML=s;
+  svg.querySelectorAll(".row.click").forEach(g=>g.addEventListener("click",()=>setBill(+g.dataset.t+1)));
+}
+
+/* ---------- Calendar ---------- */
+let year=2027, month=0, aud="all", openId=null, selDay=null;
+const on=Object.fromEntries(Object.keys(CATS).map(k=>[k,true]));
+function visible(e){return e.span[year]&&on[e.cat]&&(aud==="all"||e.pub);}
+function eventsInMonth(m){
+  const a=new Date(year,m,1), b=new Date(year,m+1,0);
+  return EV.filter(e=>visible(e)&&e.span[year][0]<=b&&e.span[year][1]>=a)
+    .sort((p,q)=>p.span[year][0]-q.span[year][0]||(q.dl||0)-(p.dl||0));
+}
+function renderYearSeg(){
+  const seg=document.getElementById("yearSeg");seg.innerHTML="";
+  YEARS.forEach(y=>{const b=document.createElement("button");b.type="button";b.textContent=y;b.setAttribute("aria-pressed",String(y===year));
+    b.addEventListener("click",()=>{year=y;openId=null;selDay=null;renderYearSeg();renderCal();});seg.appendChild(b);});
+}
+function renderChips(){
+  const el=document.getElementById("catChips");el.innerHTML="";
+  Object.entries(CATS).forEach(([k,c])=>{
+    const n=EV.filter(e=>e.cat===k&&e.span[year]&&(aud==="all"||e.pub)).length;
+    const b=document.createElement("button");b.type="button";b.className="chip";b.style.setProperty("--c",cvar(k));
+    b.setAttribute("aria-pressed",String(on[k]));
+    b.innerHTML=`<span class="sw"></span>${c.name}<span class="n">${n}</span>`;
+    b.addEventListener("click",()=>{on[k]=!on[k];renderCal();});
+    el.appendChild(b);
+  });
+}
+function whenText(e){
+  const [s,t]=e.span[year];
+  if(sameDay(s,t)) return `${fmt(s)}<small>${dow(s)}</small>`;
+  return `${fmt(s)}<small>to ${fmt(t)}</small>`;
+}
+function renderStrip(){
+  const el=document.getElementById("strip");el.innerHTML="";
+  for(let m=0;m<12;m++){
+    const list=eventsInMonth(m);
+    const b=document.createElement("button");b.type="button";b.className="mcard";b.setAttribute("aria-pressed",String(m===month));
+    if(year===today.getFullYear()&&m===today.getMonth()) b.classList.add("now");
+    const max=5;
+    let lis=list.slice(0,max).map(e=>{
+      const s=e.span[year][0];const d=s.getMonth()===m?s.getDate():"…";
+      return `<li class="${e.dl?"dl":""}" style="--c:${cvar(e.cat)}"><i></i><span class="d">${d}</span><span>${e.title}</span></li>`;
+    }).join("");
+    if(!list.length) lis=`<li class="none" style="display:block">No deadlines</li>`;
+    b.innerHTML=`<div class="mh">${MON[m]}<span class="c">${list.length||""}</span></div><ul>${lis}</ul>${list.length>max?`<div class="more">+${list.length-max} more</div>`:""}`;
+    b.addEventListener("click",()=>{month=m;openId=null;selDay=null;renderCal();});
+    el.appendChild(b);
+  }
+}
+function renderGrid(){
+  document.getElementById("mTitle").textContent=`${MONTHS[month]} ${year}`;
+  const el=document.getElementById("days");el.innerHTML="";
+  const first=new Date(year,month,1).getDay(), n=new Date(year,month+1,0).getDate();
+  const list=eventsInMonth(month);
+  for(let i=0;i<first;i++){const d=document.createElement("div");d.className="day blank";el.appendChild(d);}
+  for(let d=1;d<=n;d++){
+    const dt=new Date(year,month,d);
+    const singles=list.filter(e=>{const[s,t]=e.span[year];return sameDay(s,t)&&sameDay(s,dt);});
+    const wins=list.filter(e=>{const[s,t]=e.span[year];return !sameDay(s,t)&&dt>=s&&dt<=t;});
+    const has=singles.length||wins.length;
+    const cell=document.createElement(has?"button":"div");
+    if(has){cell.type="button";cell.setAttribute("aria-label",`${MONTHS[month]} ${d}: ${[...singles,...wins].map(e=>e.title).join("; ")}`);}
+    cell.className="day"+(has?" has":"")+(singles.some(e=>e.dl)?" dl":"")+((dt.getDay()===0||dt.getDay()===6)&&!has?" wknd":"")+(sameDay(dt,today)?" today":"")+(selDay===d?" sel":"");
+    cell.innerHTML=`<span class="n">${d}</span><span class="dots">${singles.map(e=>`<i style="--c:${cvar(e.cat)}"></i>`).join("")}</span>`+
+      (wins.length?`<span class="bars">${wins.slice(0,3).map(e=>{const[s,t]=e.span[year];return `<i class="${sameDay(dt,s)?"s":""} ${sameDay(dt,t)?"e":""}" style="--c:${cvar(e.cat)}"></i>`;}).join("")}</span>`:"");
+    if(has) cell.addEventListener("click",()=>{selDay=selDay===d?null:d;const first=[...singles,...wins][0];openId=selDay?first.id:null;renderGrid();renderAgenda();});
+    el.appendChild(cell);
+  }
+}
+function renderAgenda(){
+  const el=document.getElementById("agenda");el.innerHTML="";
+  let list=eventsInMonth(month);
+  if(selDay){const dt=new Date(year,month,selDay);list=list.filter(e=>{const[s,t]=e.span[year];return dt>=s&&dt<=t;});}
+  if(selDay){const h=document.createElement("div");h.className="legend-mini";h.style.margin="0";h.innerHTML=`<span>Showing ${MONTHS[month]} ${selDay}.</span><button type="button" class="chip" id="clearDay">Show the whole month</button>`;el.appendChild(h);
+    h.querySelector("#clearDay").addEventListener("click",()=>{selDay=null;renderGrid();renderAgenda();});}
+  if(!list.length){const d=document.createElement("div");d.className="empty";d.textContent=`Nothing in ${MONTHS[month]} ${year} with the current filters.`+(month===2&&year===2027?" March is quiet for property owners.":"");el.appendChild(d);return;}
+  list.forEach(e=>{
+    const art=document.createElement("article");art.className="ev"+(openId===e.id?" open":"");art.id="ev-"+e.id;art.style.setProperty("--c",cvar(e.cat));
+    const tags=(e.dl?`<span class="tag">Owner deadline</span>`:"")+(e.approx?`<span class="tag approx">Approximate</span>`:"");
+    const note=e.note&&e.note[year]?`<p><strong>${year}:</strong> ${e.note[year]}</p>`:"";
+    const shift=e.stat&&e.stat[year]?`<div class="shift">Statutory date ${e.stat[year]}, ${year} falls on a weekend or holiday, so it moves to the next business day.</div>`:"";
+    art.innerHTML=`<button type="button" aria-expanded="${openId===e.id}"><span class="when">${whenText(e)}</span><span><span class="t">${e.title}</span><span class="meta">${tags}<span>${CATS[e.cat].name}</span></span></span><span class="chev" aria-hidden="true">›</span></button>`+
+      (openId===e.id?`<div class="body">${note}<p>${e.desc}</p>${shift}<div class="kv"><span>Who</span><b>${e.who}</b>${e.cite?`<span>Statute</span><b>C.R.S. ${e.cite}</b>`:""}</div></div>`:"");
+    art.querySelector("button").addEventListener("click",()=>{openId=openId===e.id?null:e.id;renderAgenda();});
+    el.appendChild(art);
+  });
+}
+function renderCal(){
+  document.querySelectorAll("#audSeg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.aud===aud)));
+  renderChips();renderStrip();renderGrid();renderAgenda();
+}
+function jumpTo(id,y){
+  const e=EV.find(x=>x.id===id);year=y;month=e.span[y][0].getMonth();openId=id;selDay=null;
+  on[e.cat]=true;if(!e.pub)aud="all";
+  renderYearSeg();renderCal();
+  const node=document.getElementById("ev-"+id);
+  if(node){node.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});node.classList.add("flash");}
+}
+document.querySelectorAll("#audSeg button").forEach(b=>b.addEventListener("click",()=>{aud=b.dataset.aud;openId=null;renderCal();}));
+document.getElementById("prevM").addEventListener("click",()=>{if(month>0)month--;else if(YEARS.includes(year-1)){year--;month=11;renderYearSeg();}selDay=null;openId=null;renderCal();});
+document.getElementById("nextM").addEventListener("click",()=>{if(month<11)month++;else if(YEARS.includes(year+1)){year++;month=0;renderYearSeg();}selDay=null;openId=null;renderCal();});
+
+renderNext();renderBillSeg();renderExplainer();
+renderYearSeg();renderCal();
+})();
+</script>
+</body>
+</html>
