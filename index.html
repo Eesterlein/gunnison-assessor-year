@@ -472,14 +472,13 @@ function glyph(k,cx,cy,size,stroke){
 }
 
 function steps(c){
-  const second=c.T!==c.R;
   return [
-   {k:"sales",col:"--c-pp",lab:"Home sales",dt:`${c.s24} – ${c.apprY}`,ln:"We study two years of sales.",
+   {k:"sales",col:"--c-pp",lab:"Comparable home sales",dt:`July&nbsp;1,&nbsp;${c.s24} – June&nbsp;30,&nbsp;${c.apprY}`,ln:"We study two years of sales of similar homes.",
     at:new Date(c.s24+1,6,1),band:[new Date(c.s24,6,1),new Date(c.apprY,5,30)]},
-   {k:"appr",col:"--orange",lab:"Price day",dt:`June 30, ${c.apprY}`,ln:"Your value is what it would sell for on this day.",at:new Date(c.apprY,5,30)},
-   {k:"cond",col:"--c-exempt",lab:"Count day",dt:`Jan 1, ${c.T}`,ln:second?`Same value as ${c.R}, unless something was built or torn down.`:"We count what's on your property this day.",at:new Date(c.T,0,1)},
+   {k:"appr",col:"--orange",lab:"Appraisal date",dt:`June 30, ${c.apprY}`,ln:"We estimate your home's market value using market conditions on this date.",at:new Date(c.apprY,5,30)},
+   {k:"cond",col:"--c-exempt",lab:"Assessment date",dt:`Jan 1, ${c.T}`,ln:"We use your home's features and condition as of this date.",at:new Date(c.T,0,1)},
    {k:"levy",col:"--c-cert",lab:"Tax year",dt:String(c.T),ln:"Districts set tax rates in December.",at:new Date(c.T,9,15),band:[new Date(c.T,0,1),new Date(c.T,11,31)]},
-   {k:"pay",col:"--c-appeals",lab:"You pay",dt:`Jan – Jun ${c.B}`,ln:"Your bill comes in January.",at:new Date(c.B,2,15),band:[new Date(c.B,0,1),new Date(c.B,5,15)]}
+   {k:"pay",col:"--c-appeals",lab:"Taxes paid",dt:`January – June ${c.B}`,ln:"The Treasurer mails bills in late January. Pay in full by April 30, or in two halves with the second due June 15.",at:new Date(c.B,2,15),band:[new Date(c.B,0,1),new Date(c.B,5,15)]}
   ];
 }
 
@@ -495,15 +494,15 @@ function setBill(y){if(!BILL_YEARS.includes(y))return;bill=y;renderBillSeg();ren
 function renderExplainer(){
   const c=cycle(bill);
   document.getElementById("answer").innerHTML=
-    `Your <b class="y-pay">${c.B}</b> bill pays for <b class="y-tax">${c.T}</b>. It's based on home prices on <b class="y-price">June&nbsp;30,&nbsp;${c.apprY}</b> and your property on <b class="y-count">January&nbsp;1,&nbsp;${c.T}</b>.`;
+    `Your <b class="y-pay">${c.B}</b> bill pays for <b class="y-tax">${c.T}</b>. It's what your home, as it was on <b class="y-count">January&nbsp;1,&nbsp;${c.T}</b>, would have sold for on <b class="y-price">June&nbsp;30,&nbsp;${c.apprY}</b>.`;
   const j=document.getElementById("journey");
   j.innerHTML=steps(c).map((s,i)=>`<li style="--jc:var(${s.col});--n:${i}"><span class="ic" aria-hidden="true"><svg viewBox="0 0 36 36">${glyph(s.k,18,18,34,"var(--surface)")}</svg></span><span><span class="lab">${s.lab}</span><span class="dt" style="display:block">${s.dt}</span><span class="ln" style="display:block">${s.ln}</span></span></li>`).join("");
   if(!reduce){j.classList.remove("anim");void j.offsetWidth;j.classList.add("anim");}
-  document.getElementById("spanNote").innerHTML=`From price day to your last payment: <b>almost ${c.B-c.apprY} years</b>.`;
+  document.getElementById("spanNote").innerHTML=`From the appraisal date to the final installment deadline: <b>almost ${c.B-c.apprY} years</b>.`;
   const Y=c.B;
   document.getElementById("facts").innerHTML=
-   `<div><b>One value lasts two years, unless something changes</b>Homes get new values every odd year, like ${Y%2?Y:Y+1}. The value stays the same the next year unless the property changes, like new construction, an addition or a demolition.</div>`+
-   `<div><b>Why does the value letter come in May?</b>After the January 1 count day, the office spends January to April finishing values: checking what was built or torn down and running the sales numbers. State law sets May 1 as the mailing deadline. That leaves time for protests before values go to schools and districts in August for their budgets.</div>`+
+   `<div><b>One value lasts two years, unless something changes</b>Homes get new values every odd year, like ${Y%2?Y:Y+1}. The June 30, ${c.apprY} appraisal date is used for both the ${c.R} and ${c.R+1} tax years. The value stays the same the next year unless the property changes, like new construction, an addition or a demolition.</div>`+
+   `<div><b>Why does the value letter come in May?</b>After the January 1 assessment date, the office spends January to April finishing values: checking what was built or torn down and running the sales numbers. State law sets May 1 as the mailing deadline. That leaves time for protests before values go to schools and districts in August for their budgets.</div>`+
    `<div><b>Protest the value, not the rate</b>Disagree with your value? Tell the Assessor by early June. Tax rates come from schools, towns and districts.</div>`+
    `<div><b>Always pay on time</b>Even if you protest. If your value goes down, you get money back.</div>`;
   renderChart();
@@ -535,7 +534,7 @@ function renderChart(){
     s+=`<g class="row${ok&&!on?" click":""}" data-t="${T}">${g}</g>`;
   });
   const ly=H+16;
-  const leg=[["--c-pp","Sales looked at"],["--orange","Price day"],["--c-cert","Year being paid for"],["--c-appeals","Bill paid"]];
+  const leg=[["--c-pp","Sales looked at"],["--orange","Appraisal date"],["--c-cert","Year being paid for"],["--c-appeals","Bill paid"]];
   let lx=L;
   leg.forEach(([v,t])=>{s+=`<rect x="${lx}" y="${ly-9}" width="14" height="10" rx="3" fill="var(${v})"/><text x="${lx+20}" y="${ly}" style="font:500 12px var(--f-body);fill:var(--muted)">${t}</text>`;lx+=t.length*7+48;});
   const svg=document.getElementById("ov");svg.setAttribute("viewBox",`0 0 ${W} ${H+28}`);svg.innerHTML=s;
